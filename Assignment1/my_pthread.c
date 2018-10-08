@@ -12,7 +12,51 @@ void queue_init(queue *q)
 {
 	q->front = NULL;
 	q->rear = NULL;
-	q->conunt = 0;
+	q->count = 0;
+}
+
+int enqueue(queue *q, my_pthread_t *thread)
+{
+	node *temp = (node*) malloc(sizeof(node))
+	if (temp == NULL)
+	{
+		return 0;
+	}
+	temp->data = thread;
+	temp->next = NULL;
+
+	if(q->rear)
+	{
+		q->rear->next = temp;
+		q->rear = temp;
+	}
+	else
+	{
+		q->rear = temp;
+		q->front = temp;
+	}
+	q->count++;
+
+	return 1;
+}
+
+my_pthread_t* dequeue(queue *q)
+{
+	if (q->fornt == NULL)
+		return 0;
+	node* temp = (node*) malloc(sizeof(node));
+	temp = q->front;
+	q->front = q->front->next;
+	my_pthread_t *thread = temp->data;
+	free(temp);
+	q->count--;
+	return thread;
+
+}
+
+int get_queue_size(queue *q)
+{
+	return q->count;
 }
 
 /* create a new thread */
